@@ -213,7 +213,7 @@ int main(int argc, char** argv)
 			pFunctionAddress = (PBYTE)((PBYTE)pNtdllImageBase + rvaToRaw(pSectionHeader, numberOfSections, pAddressOfFunctions[i+d]));
 			ordinal = (WORD)ordinalBase + pAddressOfNameOrdinals[i];
 			
-			if(*((PBYTE)pFunctionAddress + 0x03) == 0xb8 && *((PBYTE)pFunctionAddress + 0x12) == 0x0f && *((PBYTE)pFunctionAddress + 0x13) == 0x05){	// 0x68:MOV EAX 0x0f05:syscall
+			if(*((PBYTE)pFunctionAddress + 0x03) == 0xb8 && *((PBYTE)pFunctionAddress + 0x12) == 0x0f && *((PBYTE)pFunctionAddress + 0x13) == 0x05 && *((PBYTE)pFunctionAddress + 0x14) == 0xc3){	// 0x68:MOV EAX 0x0f05:syscall 0xc3:RET
 				BYTE high = *((PBYTE)pFunctionAddress + 0x05);
 				BYTE low = *((PBYTE)pFunctionAddress + 0x04);
 				systemCallNumber = (high << 8) | low;
@@ -271,7 +271,7 @@ int main(int argc, char** argv)
 			pFunctionAddress = (PBYTE)((PBYTE)pNtdllImageBase + pAddressOfFunctions[i+d]);
 			ordinal = (WORD)ordinalBase + pAddressOfNameOrdinals[i];
 			
-			if(*((PBYTE)pFunctionAddress + 0x03) == 0xb8 && *((PBYTE)pFunctionAddress + 0x12) == 0x0f && *((PBYTE)pFunctionAddress + 0x13) == 0x05){	// 0x68:MOV EAX 0x0f05:syscall
+			if(*((PBYTE)pFunctionAddress + 0x03) == 0xb8 && *((PBYTE)pFunctionAddress + 0x12) == 0x0f && *((PBYTE)pFunctionAddress + 0x13) == 0x05 && *((PBYTE)pFunctionAddress + 0x14) == 0xc3){	// 0x68:MOV EAX 0x0f05:syscall 0xc3:RET
 				BYTE high = *((PBYTE)pFunctionAddress + 0x05);
 				BYTE low = *((PBYTE)pFunctionAddress + 0x04);
 				systemCallNumber = (high << 8) | low;
